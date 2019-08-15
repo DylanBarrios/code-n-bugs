@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 package backend;
-import Interfaz.FramePrincipal;
+import interfaz.*;
+import interfaz.login;
 
 /**
  *
  * @author dylan
  */
-public class Code {
+public class code {
     
     public static void main (String[] args){
-        FramePrincipal fp = new FramePrincipal();
-        fp.setVisible(true);
+        login log = new login();
+        log.setVisible(true);
     }
 }
