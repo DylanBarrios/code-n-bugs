@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package interfaz;
-import InterfazAdministrador.administrador;
+import interfazAdministrador.administrador;
+import interfazOperador.operador;
+import interfazRecepcionista.recepcionista;
 import java.sql.*;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -35,11 +37,6 @@ public class login extends javax.swing.JFrame {
         this.repaint();
     }
 
-    public Image getIconImage(){
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icono.png"));
-        return retValue;
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -50,7 +47,6 @@ public class login extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         jLabelLogo = new javax.swing.JLabel();
         btnEntrar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,8 +76,9 @@ public class login extends javax.swing.JFrame {
         btnEntrar.setBackground(new java.awt.Color(204, 91, 47));
         btnEntrar.setFont(new java.awt.Font("Pagul", 1, 24)); // NOI18N
         btnEntrar.setForeground(new java.awt.Color(254, 254, 254));
-        btnEntrar.setText("Entrar");
+        btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/descubrir.png"))); // NOI18N
         btnEntrar.setBorder(null);
+        btnEntrar.setContentAreaFilled(false);
         btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntrar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -98,15 +95,7 @@ public class login extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 110, 50));
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
+        getContentPane().add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 110, 80));
 
         jLabelFondo.setBackground(new java.awt.Color(230, 130, 30));
         jLabelFondo.setOpaque(true);
@@ -122,18 +111,30 @@ public class login extends javax.swing.JFrame {
         if (!usuario.equals("")&& !password.equals("")){
             try {
                 Connection conec = conexion.conectar();
-                PreparedStatement pst = conec.prepareStatement("SELECT Rol, Estado FROM Usuarios WHERE Usuario = '"+usuario+"' AND password = '"+password+"'");
+                PreparedStatement pst = conec.prepareStatement("SELECT Rol, Estado FROM Usuario WHERE Username = '"+usuario+"' AND Password = '"+password+"'");
                 ResultSet rs = pst.executeQuery();
                 
                 if (rs.next()) {
                 
                     String rol = rs.getString("Rol");
-                    Boolean estado = rs.getBoolean("Estado");
+                    String estado = rs.getString("Estado");
                     
-                    if (estado && rol.equals("Administrador")) {
+                    if (estado.equals("Activo") && rol.equals("Administrador")) {
                         txtPassword.setBackground(Color.green);
                         txtUsuario.setBackground(Color.green);
                         new administrador().setVisible(true);
+                        dispose();
+                    }           
+                    else if(rol.equals("Operador")&&estado.equals("Activo")){
+                        txtPassword.setBackground(Color.green);
+                        txtUsuario.setBackground(Color.green);
+                        new operador().setVisible(true);
+                        dispose();
+                    }
+                    else if(rol.equals("Recepcionista")&&estado.equals("Activo")){
+                        txtPassword.setBackground(Color.green);
+                        txtUsuario.setBackground(Color.green);
+                        new recepcionista().setVisible(true);
                         dispose();
                     }
                     
@@ -170,15 +171,9 @@ public class login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEntrarMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-        new administrador().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelPassword;

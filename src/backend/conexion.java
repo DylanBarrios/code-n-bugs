@@ -21,7 +21,6 @@ public class conexion {
         
         try {
             conecta = DriverManager.getConnection(ruta,usser,password);
-            System.out.println("conectado");
             return conecta;
             
         } catch (SQLException e) {
