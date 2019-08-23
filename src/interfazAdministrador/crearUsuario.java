@@ -1,4 +1,5 @@
 package interfazAdministrador;
+
 import backend.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +11,7 @@ public class crearUsuario extends javax.swing.JInternalFrame {
     public crearUsuario() {
         initComponents();
     }
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -140,11 +139,12 @@ public class crearUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(txtNombre.getText().equals("") || txtPassword.getText().equals("") || txtUsuario.getText().equals(""))
+        if (txtNombre.getText().equals("") || txtPassword.getText().equals("") || txtUsuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Porfavor rellene todos los campos");
-        else{
+        } else {
             nuevoUsuario();
-            limpiar();}
+            limpiar();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -162,52 +162,59 @@ public class crearUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
-    public void nuevoUsuario(){
+    public void nuevoUsuario() {
         String nombre = txtNombre.getText();
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
         String stringRol = "";
         String stringEstado = "";
-        
+
         int rol = cbxRol.getSelectedIndex();
         int estado = cbxEstado.getSelectedIndex();
-        
-        if(rol == 0)
-            stringRol = "Administrador";
-        else if(rol == 1)
-            stringRol = "Operador";
-        else if(rol == 2)
-            stringRol = "Recepcionista";
-        
-        if(estado == 0)
+
+        switch (rol) {
+            case 0:
+                stringRol = "Administrador";
+                break;
+            case 1:
+                stringRol = "Operador";
+                break;
+            case 2:
+                stringRol = "Recepcionista";
+                break;
+            default:
+                break;
+        }
+
+        if (estado == 0) {
             stringEstado = "Activo";
-        else if(estado == 1)
+        } else if (estado == 1) {
             stringEstado = "Inactivo";
-        
-        
-        try{
+        }
+
+        try {
             Connection conecta = conexion.conectar();
             String datos = "INSERT INTO Usuario VALUES(?,?,?,?,?,?)";
-                                 
+
             PreparedStatement pst = conecta.prepareStatement(datos);
-            
+
             pst.setInt(1, 0);
             pst.setString(2, nombre);
             pst.setString(3, usuario);
             pst.setString(4, password);
             pst.setString(5, stringRol);
             pst.setString(6, stringEstado);
-            
+
             pst.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Usuario nuevo creado");
-            
-        }catch(SQLException e){
-            System.out.println("error "+e);
+
+        } catch (SQLException e) {
+            System.out.println("error " + e);
         }
     }
-    
-    public void limpiar(){
+
+    public void limpiar() {
         txtNombre.setText("");
         txtPassword.setText("");
         txtUsuario.setText("");

@@ -22,11 +22,19 @@ public class crearRuta extends javax.swing.JInternalFrame {
         txtDestino = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cbxEstado = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtPrecioPriorizacion = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtPrecioDestino = new javax.swing.JTextField();
+        txtPrecioLibra = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Creacion de nueva ruta");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNombre.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 36, 200, 40));
 
         CrearRuta.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
         CrearRuta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mas.png"))); // NOI18N
@@ -37,62 +45,32 @@ public class crearRuta extends javax.swing.JInternalFrame {
                 CrearRutaActionPerformed(evt);
             }
         });
+        getContentPane().add(CrearRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 179, 65));
 
         jLabel3.setText("Nombre de la ruta:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
 
         jLabel1.setText("Destino de la ruta");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 83, -1, -1));
+        getContentPane().add(txtDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 106, 200, 40));
 
         jLabel4.setText("Estado de la ruta:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 154, -1, -1));
 
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
+        getContentPane().add(cbxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 178, 180, 40));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(CrearRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxEstado, 0, 200, Short.MAX_VALUE)
-                            .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(CrearRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel2.setText("Precio de priorizacion:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 82, -1, -1));
+        getContentPane().add(txtPrecioPriorizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 102, 180, 40));
+
+        jLabel5.setText("Precio del destino");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 154, -1, -1));
+
+        jLabel6.setText("Precio por libra:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 12, -1, -1));
+        getContentPane().add(txtPrecioDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 178, 200, 40));
+        getContentPane().add(txtPrecioLibra, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 180, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -102,7 +80,8 @@ public class crearRuta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Porfavor rellene todos los campos");
         else{
             crearRuta();
-            limpiar();}
+            limpiar();
+        }
     }//GEN-LAST:event_CrearRutaActionPerformed
 
   
@@ -112,15 +91,26 @@ public class crearRuta extends javax.swing.JInternalFrame {
     private javax.swing.JButton CrearRuta;
     private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtDestino;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecioDestino;
+    private javax.swing.JTextField txtPrecioLibra;
+    private javax.swing.JTextField txtPrecioPriorizacion;
     // End of variables declaration//GEN-END:variables
 
       public void crearRuta(){
         String nombre = txtNombre.getText();
         String destino = txtDestino.getText();
+        float precioDestino = Float.parseFloat(txtPrecioDestino.getText());
+        float precioLibra = Float.parseFloat(txtPrecioLibra.getText());
+        float precioPriorizacion = Float.parseFloat(txtPrecioPriorizacion.getText());
+        
+        
         String stringEstado = "";
         int estado = cbxEstado.getSelectedIndex();
             
@@ -133,7 +123,7 @@ public class crearRuta extends javax.swing.JInternalFrame {
         try {
             Connection conectar = conexion.conectar();
             
-            String datos = "INSERT INTO Rutas VALUES(?,?,?,?)";
+            String datos = "INSERT INTO Rutas VALUES(?,?,?,?,?,?,?)";
             
             PreparedStatement pst = conectar.prepareStatement(datos);
             
@@ -141,6 +131,9 @@ public class crearRuta extends javax.swing.JInternalFrame {
             pst.setString(2, nombre);
             pst.setString(3, destino);
             pst.setString(4, stringEstado);
+            pst.setFloat(5, precioDestino);
+            pst.setFloat(6, precioLibra);
+            pst.setFloat(7, precioPriorizacion);
             pst.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Ruta nueva creada");
@@ -154,5 +147,8 @@ public class crearRuta extends javax.swing.JInternalFrame {
     public void limpiar(){
         txtDestino.setText("");
         txtNombre.setText("");
+        txtPrecioLibra.setText("");
+        txtPrecioDestino.setText("");
+        txtPrecioPriorizacion.setText("");
     }
 }

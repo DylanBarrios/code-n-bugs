@@ -20,8 +20,8 @@ public class actualizarPuntos extends javax.swing.JDialog {
     int idUsuario = tablaPuntosControl.idUsuario;
     int IdPunto = tablaPuntosControl.idPunto;
     
-    public actualizarPuntos(Usuarios user, boolean modal) {
-        super(user, modal);
+    public actualizarPuntos(puntosControl puntos, boolean modal) {
+        super(puntos, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         operarios();
@@ -178,6 +178,7 @@ public class actualizarPuntos extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         eliminarPunto();
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,10 +302,10 @@ private void llenarInfo() {
     private void eliminarPunto() {
         
         try {
-            String datos = "DELETE FROM PuntoControl WHERE IdPunto = "+IdPunto+"'";
+            String datos = "DELETE FROM PuntoControl WHERE IdPunto = '"+IdPunto+"'";
             PreparedStatement pst = conecta.prepareStatement(datos);
-            
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Punto de control eliminado");
         } catch (Exception e) {
             System.out.println("Error "+e);
         }

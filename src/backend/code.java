@@ -1,6 +1,7 @@
 package backend;
-import interfaz.login;
+import login.login;
 import interfazAdministrador.administrador;
+import interfazRecepcionista.recepcionista;
 
 /**
  *
@@ -9,7 +10,7 @@ import interfazAdministrador.administrador;
 public class code {
     
     public static void main (String[] args){
-        administrador log = new administrador();
+        recepcionista log = new recepcionista();
         log.setVisible(true);
     }
 }

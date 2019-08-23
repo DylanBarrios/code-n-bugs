@@ -6,7 +6,7 @@
 package interfazRecepcionista;
 
 import backend.conexion;
-import interfaz.login;
+import login.login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,10 +51,9 @@ public class recepcionista extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         itemIngresar = new javax.swing.JMenuItem();
         itemEntregar = new javax.swing.JMenuItem();
-        itemLocalizar = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -65,10 +64,10 @@ public class recepcionista extends javax.swing.JFrame {
                 txtBuscarKeyPressed(evt);
             }
         });
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 200, 40));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 10, 200, 40));
 
         labelBuscar.setText("Nit Cliente");
-        getContentPane().add(labelBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
+        getContentPane().add(labelBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 20, -1, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
         jButton2.setBorder(null);
@@ -78,7 +77,7 @@ public class recepcionista extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 0, 80, 60));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 0, 80, 60));
 
         tablePaquetes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,9 +92,9 @@ public class recepcionista extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablePaquetes);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(752, 58, 750, 490));
-        getContentPane().add(dpPaquetes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 742, 600));
-        getContentPane().add(dpPaquetesPorEntregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(748, 0, 760, 600));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 60, 630, 490));
+        getContentPane().add(dpPaquetes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 590));
+        getContentPane().add(dpPaquetesPorEntregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, 660, 590));
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/orden.png"))); // NOI18N
         jMenu1.setText("Paquetes");
@@ -111,13 +110,13 @@ public class recepcionista extends javax.swing.JFrame {
         itemEntregar.setText("Entregar un paquete");
         jMenu1.add(itemEntregar);
 
-        itemLocalizar.setText("Localizar paquete");
-        itemLocalizar.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setText("Ver paquetes sin entregar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemLocalizarActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(itemLocalizar);
+        jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -131,14 +130,6 @@ public class recepcionista extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setText("Ver paquetes sin entregar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
 
@@ -163,15 +154,12 @@ public class recepcionista extends javax.swing.JFrame {
         tablaPaquetes();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void itemLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLocalizarActionPerformed
-        
-    }//GEN-LAST:event_itemLocalizarActionPerformed
-
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         DefaultTableModel modelo = new DefaultTableModel();
         try {
             Connection conectar = conexion.conectar();
-            String datos = "SELECT IdPaquete, NitCLiente, Destino, Costo FROM Paquete WHERE NitCLiente LIKE '%"+txtBuscar.getText()+"%'"; 
+            String datos = "SELECT IdPaquete, NitCLiente, Peso, Destino, Costo, TiempoEnRuta,"
+                    +"Localizacion FROM Paquete WHERE NitCLiente LIKE '%"+txtBuscar.getText()+"%'"; 
             PreparedStatement pst = conectar.prepareStatement(datos);
             
             ResultSet rs = pst.executeQuery();
@@ -181,6 +169,7 @@ public class recepcionista extends javax.swing.JFrame {
             
             modelo.addColumn("Id paquete");
             modelo.addColumn("Nit del cliente");
+            modelo.addColumn("Peso");
             modelo.addColumn("Destino");
             modelo.addColumn("Costo");
             modelo.addColumn("Tiempo en ruta");
@@ -188,9 +177,9 @@ public class recepcionista extends javax.swing.JFrame {
             
                         
             while(rs.next()){
-                Object[] fila = new Object[4];
+                Object[] fila = new Object[7];
                 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 7; i++) {
                     fila[i] = rs.getObject(i +1);
                 }
                 modelo.addRow(fila);
@@ -233,7 +222,7 @@ public class recepcionista extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         try {
             Connection conectar = conexion.conectar();
-            String datos = "SELECT IdPaquete, NitCLiente, Destino, Costo, TiempoEnRuta,"
+            String datos = "SELECT IdPaquete, NitCLiente, Peso, Destino, Costo, TiempoEnRuta,"
                     + "Localizacion FROM Paquete WHERE EstadoPaquete = 0"; 
             PreparedStatement pst = conectar.prepareStatement(datos);
             
@@ -244,6 +233,7 @@ public class recepcionista extends javax.swing.JFrame {
             
             modelo.addColumn("Id paquete");
             modelo.addColumn("Nit del cliente");
+            modelo.addColumn("Peso");
             modelo.addColumn("Destino");
             modelo.addColumn("Costo");
             modelo.addColumn("Tiempo en ruta (horas)");
@@ -251,9 +241,9 @@ public class recepcionista extends javax.swing.JFrame {
             
                         
             while(rs.next()){
-                Object[] fila = new Object[6];
+                Object[] fila = new Object[7];
                 
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 7; i++) {
                     fila[i] = rs.getObject(i +1);
                 }
                 modelo.addRow(fila);
@@ -271,7 +261,6 @@ public class recepcionista extends javax.swing.JFrame {
     public javax.swing.JDesktopPane dpPaquetesPorEntregar;
     private javax.swing.JMenuItem itemEntregar;
     private javax.swing.JMenuItem itemIngresar;
-    private javax.swing.JMenuItem itemLocalizar;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

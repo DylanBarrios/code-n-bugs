@@ -1,6 +1,6 @@
 package interfazOperador;
 
-import interfaz.login;
+import login.login;
 
 /**
  *

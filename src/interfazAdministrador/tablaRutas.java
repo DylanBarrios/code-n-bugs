@@ -1,6 +1,8 @@
 package interfazAdministrador;
 
 import backend.conexion;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class tablaRutas extends javax.swing.JInternalFrame {
 
+    public static String nombre;
+    
     public tablaRutas() {
         initComponents();
     }
@@ -31,7 +35,7 @@ public class tablaRutas extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,6 +74,20 @@ public class tablaRutas extends javax.swing.JInternalFrame {
             System.err.println("Error en nombre de usuario"+e);
             JOptionPane.showMessageDialog(null, "Error, notifique al administrador!!");
         }
+        
+        tableRutas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                int filaSelec = tableRutas.rowAtPoint(e.getPoint());
+                        
+                if(filaSelec >=0){
+                    nombre = (String)modelo.getValueAt(filaSelec, 0);
+                    rutas ruta = new rutas();
+                    actualizarRuta ar = new actualizarRuta(ruta, true);
+                    ar.setVisible(true);
+                }
+            }
+        });
     }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -63,7 +63,7 @@ public class puntosControl extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         dpPuntos.removeAll();
         dpPuntos.repaint();
-        CrearPunto cp = new CrearPunto();
+        crearPunto cp = new crearPunto();
         dpPuntos.add(cp);
         cp.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed

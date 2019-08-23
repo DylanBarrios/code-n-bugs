@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
  *
  * @author dylan
  */
-public class CrearPunto extends javax.swing.JInternalFrame {
+public class crearPunto extends javax.swing.JInternalFrame {
     Connection conecta = conexion.conectar();
     
-    public CrearPunto() {
+    public crearPunto() {
         initComponents();
         operarios();
         rutas();

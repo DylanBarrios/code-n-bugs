@@ -112,8 +112,8 @@ public class tablaPuntosControl extends javax.swing.JInternalFrame {
                     idUsuario = (int)modelo.getValueAt(filaSelec, 5);
                     
                     
-                    Usuarios user = new Usuarios();
-                    actualizarPuntos ap = new actualizarPuntos(user, true);
+                    puntosControl punto = new puntosControl();
+                    actualizarPuntos ap = new actualizarPuntos(punto, true);
                     ap.setVisible(true);
                 }
             }
