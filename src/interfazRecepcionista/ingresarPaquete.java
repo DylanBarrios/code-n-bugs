@@ -24,6 +24,7 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
     public static int horasEnRuta = 0;
     public static String localizacion;
     DefaultTableModel modelo = new DefaultTableModel();
+    String ruta="";
 
     public ingresarPaquete() {
         initComponents();
@@ -233,7 +234,7 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         PreparedStatement pst;
         ResultSet rs;
         boolean booleanpriorizacion = false;
-        int peso = Integer.parseInt(txtPeso.getText());
+        float peso = Float.parseFloat(txtPeso.getText());
         localizacion = "Bodega";
 
         if (priorizacion.equals("No")) {
@@ -248,7 +249,7 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                datos = "INSERT INTO Paquete VALUES(?,?,?,?,?,?,?,?,?,?)";
+                datos = "INSERT INTO Paquete VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
                 pst = conecta.prepareStatement(datos);
 
                 pst.setInt(1, 0);
@@ -258,9 +259,11 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
                 pst.setBoolean(5, booleanpriorizacion);
                 pst.setBoolean(6, false);
                 pst.setDouble(7, cobro());
-                pst.setFloat(8, horasEnRuta);
+                pst.setInt(8, horasEnRuta);
                 pst.setString(9, localizacion);
                 pst.setString(10, fecha);
+                pst.setString(11, obtenerRuta());
+                pst.setDouble(12, 0); 
                 pst.executeUpdate();
 
                 JOptionPane.showMessageDialog(null, "Paquete agregado Le cobraran " + cobro());
@@ -410,4 +413,18 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
             modelo.addColumn("Fecha de ingreso");
 
     }
+    
+    public String obtenerRuta(){
+    try{
+        PreparedStatement ps= conecta.prepareStatement("SELECT NombreRuta FROM Rutas WHERE Destino ='"+cbxDestino.getSelectedItem().toString()+"'");
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+        ruta=rs.getString("NombreRuta");
+        }
+    }catch(SQLException e){
+        System.err.println("Error al jalar la ruta " +e);
+    }
+    return ruta;
+    }
+    
 }

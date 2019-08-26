@@ -10,7 +10,7 @@ import interfazRecepcionista.recepcionista;
 public class code {
     
     public static void main (String[] args){
-        recepcionista log = new recepcionista();
+        login log = new login();
         log.setVisible(true);
     }
 }

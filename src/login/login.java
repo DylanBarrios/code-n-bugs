@@ -22,9 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form login
-     */
+    public static String usuarioRegistrado;
     public login() {
         initComponents();
         this.setSize(400,540);
@@ -105,6 +103,30 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        validarUsuario();
+        usuarioRegistrado = txtUsuario.getText();
+    }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void btnEntrarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnEntrarFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntrarFocusGained
+
+    private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
+        
+    }//GEN-LAST:event_btnEntrarMouseClicked
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEntrar;
+    private javax.swing.JLabel jLabelFondo;
+    private javax.swing.JLabel jLabelLogo;
+    private javax.swing.JLabel jLabelPassword;
+    private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsuario;
+    // End of variables declaration//GEN-END:variables
+
+    public void validarUsuario(){
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
         
@@ -160,25 +182,7 @@ public class login extends javax.swing.JFrame {
             
         }
         
-        
-    }//GEN-LAST:event_btnEntrarActionPerformed
-
-    private void btnEntrarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnEntrarFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEntrarFocusGained
-
-    private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
-        
-    }//GEN-LAST:event_btnEntrarMouseClicked
+    }
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntrar;
-    private javax.swing.JLabel jLabelFondo;
-    private javax.swing.JLabel jLabelLogo;
-    private javax.swing.JLabel jLabelPassword;
-    private javax.swing.JLabel jLabelUsuario;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUsuario;
-    // End of variables declaration//GEN-END:variables
 }
