@@ -24,7 +24,6 @@ public class login extends javax.swing.JFrame {
     public static String usuarioRegistrado;
     public login() {
         initComponents();
-        this.setSize(400,540);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         
@@ -53,22 +52,24 @@ public class login extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(254, 254, 254));
         txtUsuario.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         txtUsuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 250, 40));
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, 250, 40));
 
         jLabelUsuario.setFont(new java.awt.Font("URW Bookman L", 1, 18)); // NOI18N
         jLabelUsuario.setForeground(new java.awt.Color(254, 254, 254));
         jLabelUsuario.setText("Usuario:");
-        getContentPane().add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, -1));
+        getContentPane().add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, -1, -1));
 
         jLabelPassword.setFont(new java.awt.Font("URW Bookman L", 1, 18)); // NOI18N
         jLabelPassword.setForeground(new java.awt.Color(254, 254, 254));
         jLabelPassword.setText("contraseña");
-        getContentPane().add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
+        getContentPane().add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, -1, -1));
 
         txtPassword.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         txtPassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 250, 40));
-        getContentPane().add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 250, 180));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 450, 250, 40));
+
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        getContentPane().add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 250, 250));
 
         btnEntrar.setBackground(new java.awt.Color(204, 91, 47));
         btnEntrar.setFont(new java.awt.Font("Pagul", 1, 24)); // NOI18N
@@ -92,11 +93,11 @@ public class login extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 110, 80));
+        getContentPane().add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 110, 80));
 
         jLabelFondo.setBackground(new java.awt.Color(230, 130, 30));
         jLabelFondo.setOpaque(true);
-        getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 540));
+        getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -126,8 +127,8 @@ public class login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void validarUsuario(){
-        String usuario = txtUsuario.getText();
-        String password = txtPassword.getText();
+        String usuario = txtUsuario.getText();                                              //Metodo que analiza para saber que interfaz abrira dependiendo
+        String password = txtPassword.getText();                                            //del rol del usuario
         
         if (!usuario.equals("")&& !password.equals("")){
             try {
@@ -140,19 +141,19 @@ public class login extends javax.swing.JFrame {
                     String rol = rs.getString("Rol");
                     String estado = rs.getString("Estado");
                     
-                    if (estado.equals("Activo") && rol.equals("Administrador")) {
+                    if (estado.equals("Activo") && rol.equals("Administrador")) {           //Verifica si los datos ingresados son de un administrador
                         txtPassword.setBackground(Color.green);
                         txtUsuario.setBackground(Color.green);
                         new administrador().setVisible(true);
                         dispose();
                     }           
-                    else if(rol.equals("Operador")&&estado.equals("Activo")){
+                    else if(rol.equals("Operador")&&estado.equals("Activo")){               //Verifica si los datos ingresados son de un Operador
                         txtPassword.setBackground(Color.green);
                         txtUsuario.setBackground(Color.green);
                         new operador().setVisible(true);
                         dispose();
                     }
-                    else if(rol.equals("Recepcionista")&&estado.equals("Activo")){
+                    else if(rol.equals("Recepcionista")&&estado.equals("Activo")){          //Verifica si los datos ingresados son de un Recepcionista
                         txtPassword.setBackground(Color.green);
                         txtUsuario.setBackground(Color.green);
                         new recepcionista().setVisible(true);
@@ -161,15 +162,15 @@ public class login extends javax.swing.JFrame {
                     
                 }else {
                     JOptionPane.showMessageDialog(null,"Lo siento sus datos son erroneos, porfavor vuelva a escribirlos");
-                    txtPassword.setText("");
-                }
+                    txtPassword.setText("");                                                //Si la contraseña o el usuario estan mal escritas avisara y borrara
+                }                                                                           //los datos que tenga el textField donde se escribe la contraseña
                 
             } catch (SQLException e) {
-                System.err.println("Error en login: "+e);
+                System.err.println("Error en login: "+e);                                     //Maneja el erro si exitieran mientras se conceta a la base de datos
                 JOptionPane.showMessageDialog(null, "!Error, notifique al administrador!");
             }
         }else{
-            if(txtUsuario.getText().equals(""))
+            if(txtUsuario.getText().equals(""))                                             //Pinta de colores deacuerdo a si estan bein o mal los datos
                 txtUsuario.setBackground(Color.red);
             else
                 txtUsuario.setBackground(Color.WHITE);

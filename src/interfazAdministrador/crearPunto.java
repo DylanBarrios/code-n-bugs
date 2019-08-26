@@ -17,8 +17,8 @@ public class crearPunto extends javax.swing.JInternalFrame {
     
     public crearPunto() {
         initComponents();
-        operarios();
-        rutas();
+        operarios();                                                                        //Llena el combobox con los usuarios que sean operarios
+        rutas();                                                                            //Carga las rutas que tengamos disponibles
     }
 
     @SuppressWarnings("unchecked")
@@ -153,8 +153,8 @@ public class crearPunto extends javax.swing.JInternalFrame {
         if(txtPrecioHora.getText().equals("") || txtNombre.getText().equals("") || txtCola.getText().equals(ui))
             JOptionPane.showMessageDialog(null, "Por favor llene todo los campos");
         else{
-            crearPunto();
-            txtPrecioHora.setText("");
+            crearPunto();                                                                   //Metodo que crear un punto de control con todos sus atributos
+            txtPrecioHora.setText("");                                                      //y la cola respectiva
             txtNombre.setText("");
         }
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -206,13 +206,13 @@ public class crearPunto extends javax.swing.JInternalFrame {
         cola colaNueva = new cola(taman);
         String de = txtNombre.getText();
         try {
-            PreparedStatement ps = conecta.prepareStatement("SELECT * FROM Paquete WHERE Localizacion <>'Bodega'"
-                    + "AND Ruta='" + cbxRuta.getSelectedItem().toString() + "'");
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-            } else {
-                colaNueva.agregarColaNueva(de,para());
-            }
+            PreparedStatement ps = conecta.prepareStatement("SELECT * FROM Paquete WHERE Localizacion <>'Bodega'"           //Verifica en la tabla paquete si los paquetes
+                    + "AND Ruta='" + cbxRuta.getSelectedItem().toString() + "'");                                           //No estan en bodega e identifica en que ruta
+            ResultSet rs = ps.executeQuery();                                                                               //esta puesto
+            if (rs.next()) {                                                                                                //Si hay paquetes que no esten en bodega
+            } else {                                                                                                        //No hace nada
+                colaNueva.agregarColaNueva(de,para());                                                                      //Si hay paquetes en bodega los jala a una nueva
+            }                                                                                                               //cola
         } catch (SQLException e) {
             System.err.println("Error en en la base de datos al crear cola" + e);
         }
@@ -222,8 +222,8 @@ public class crearPunto extends javax.swing.JInternalFrame {
         String para = "";
         
         try {
-            PreparedStatement ps = conecta.prepareStatement("SELECT Destino FROM Rutas WHERE IdRuta =" +IdRuta);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = conecta.prepareStatement("SELECT Destino FROM Rutas WHERE IdRuta =" +IdRuta);            //Obtine el destino del paquete 
+            ResultSet rs = ps.executeQuery();                                                                               //basada en el Id de la ruta
             if (rs.next()) {
                 para = rs.getString("Destino");
             }
@@ -234,7 +234,7 @@ public class crearPunto extends javax.swing.JInternalFrame {
     }
 
     
-        public void crearPunto(){
+    public void crearPunto(){
         int precioHora = Integer.parseInt(txtPrecioHora.getText());
         String nombrePunto = txtNombre.getText();
         String operario = (String) cbxRuta.getSelectedItem();
@@ -247,21 +247,21 @@ public class crearPunto extends javax.swing.JInternalFrame {
         int IdUsuario = 0;
 
         try {
-            //Agrega el Id de l aruta
+                                                                                                                //Agrega el Id de l aruta
             datos = "SELECT IdRuta FROM Rutas WHERE NombreRuta = '"+nombreRuta+"'";
             PreparedStatement pst = conecta.prepareStatement(datos);
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
             IdRuta = rs.getInt("IdRuta"); 
             }
-            //Agrega el Id del usuario 
+                                                                                                                //Agrega el Id del usuario 
             datos = "SELECT IdUsuario FROM Usuario WHERE NombreUsuario = '"+nombreUsuario+"'";
             pst = conecta.prepareStatement(datos);
             rs = pst.executeQuery();
             while(rs.next()){
             IdUsuario = rs.getInt("IdUsuario"); 
             }
-            //Se llena la base de datos
+                                                                                                                //Se llena la base de datos
             datos = "INSERT INTO PuntoControl VALUES(?,?,?,?,?,?)";
             pst = conecta.prepareStatement(datos);
 
@@ -291,8 +291,8 @@ public class crearPunto extends javax.swing.JInternalFrame {
         String datos = "SELECT Rol, NombreUsuario FROM Usuario";
         
         try {
-                PreparedStatement ps = conecta.prepareStatement(datos);
-                ResultSet rs = ps.executeQuery();
+                PreparedStatement ps = conecta.prepareStatement(datos);                                 //Verifica quienes son operarios par asignarle un 
+                ResultSet rs = ps.executeQuery();                                                       //punto de control
                 
                 while(rs.next()){
                     if(rs.getString("Rol").equals("Operador"))
@@ -316,8 +316,8 @@ public class crearPunto extends javax.swing.JInternalFrame {
                 PreparedStatement ps = conecta.prepareStatement(datos);
                 ResultSet rs = ps.executeQuery();
                 
-                while(rs.next()){
-                    list.add(rs.getString("NombreRuta"));
+                while(rs.next()){                                                                        //Busca las rutas que existan y las muestra para que
+                    list.add(rs.getString("NombreRuta"));                                                //el nuevo punto de control sea asignado a uno de estos
                 }
                 
                 for(int i =0; i<list.size(); i++){

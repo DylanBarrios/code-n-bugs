@@ -111,6 +111,10 @@ public class localizarPaquete extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtLocalizar;
     // End of variables declaration//GEN-END:variables
 
+    /*
+    //Metodo para saber donde se enceuntra un paquete deacuerdo al id del paquete que se pobtenga
+    //del textField obteniendo la localizacion desde la base de datos
+    */
     public void localizarPaquetes(){
         String idPaquete = txtLocalizar.getText();
         String localizacion="";

@@ -12,12 +12,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class tablaPuntosControl extends javax.swing.JInternalFrame {
+
     public static String nombrePunto;
     public static int idRuta;
     public static int idUsuario;
     public static int idPunto;
-    
-    
+
     public tablaPuntosControl() {
         initComponents();
     }
@@ -60,58 +60,53 @@ public class tablaPuntosControl extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void rellenarTabla(){
+    public void rellenarTabla() {
         DefaultTableModel modelo = new DefaultTableModel();
         try {
             Connection conectar = conexion.conectar();
             String datos;
             PreparedStatement pst;
             ResultSet rs;
-            datos = "SELECT IdPunto, NombrePunto, EstadoPunto, PrecioHora, IdRuta, IdUsuario FROM PuntoControl"; 
-            pst = conectar.prepareStatement(datos);
-            rs = pst.executeQuery();
-            
-            
-            
+            datos = "SELECT IdPunto, NombrePunto, EstadoPunto, PrecioHora, IdRuta, IdUsuario FROM PuntoControl";        //Tomamos datos de la tabla de puntos de 
+            pst = conectar.prepareStatement(datos);                                                                     //control los cuales serviran para
+            rs = pst.executeQuery();                                                                                    //lenar la tabla con todos los puntos de
+                                                                                                                        //control que estan creados
             tablePuntos = new JTable(modelo);
             jScrollPane1.setViewportView(tablePuntos);
-            
+
             modelo.addColumn("Id punto de control");
             modelo.addColumn("Nombre");
             modelo.addColumn("Estado");
             modelo.addColumn("Precio por hora");
             modelo.addColumn("Id Ruta");
             modelo.addColumn("Id encargado");
-                        
-            while(rs.next()){
+
+            while (rs.next()) {
                 Object[] fila = new Object[6];
                 for (int i = 0; i < 6; i++) {
-                    fila[i] = rs.getObject(i+1);
+                    fila[i] = rs.getObject(i + 1);
                 }
-                
-                
+
                 modelo.addRow(fila);
             }
-            
-            
+
             conectar.close();
         } catch (SQLException e) {
-            System.err.println("Error en nombre de usuario"+e);
+            System.err.println("Error en nombre de usuario" + e);
             JOptionPane.showMessageDialog(null, "Error, notifique al administrador!!");
         }
-    
-    tablePuntos.addMouseListener(new MouseAdapter() {
+
+        tablePuntos.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e){
-                int filaSelec = tablePuntos.rowAtPoint(e.getPoint());
-                
-                if(filaSelec >= 0){
-                    idPunto = (int)modelo.getValueAt(filaSelec, 0);
-                    nombrePunto = (String)modelo.getValueAt(filaSelec, 1);
-                    idRuta = (int)modelo.getValueAt(filaSelec, 4);
-                    idUsuario = (int)modelo.getValueAt(filaSelec, 5);
-                    
-                    
+            public void mouseClicked(MouseEvent e) {                                            //Metodo que ayuda a identificar si una celda de la tabla
+                int filaSelec = tablePuntos.rowAtPoint(e.getPoint());                           //a sido precionado y habre la ventana para actualizar 
+                                                                                                //o modificar los datos del punto de control
+                if (filaSelec >= 0) {
+                    idPunto = (int) modelo.getValueAt(filaSelec, 0);
+                    nombrePunto = (String) modelo.getValueAt(filaSelec, 1);
+                    idRuta = (int) modelo.getValueAt(filaSelec, 4);
+                    idUsuario = (int) modelo.getValueAt(filaSelec, 5);
+
                     puntosControl punto = new puntosControl();
                     actualizarPuntos ap = new actualizarPuntos(punto, true);
                     ap.setVisible(true);
@@ -119,9 +114,9 @@ public class tablaPuntosControl extends javax.swing.JInternalFrame {
             }
         }
         );
-    
-    }    
-    
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablePuntos;

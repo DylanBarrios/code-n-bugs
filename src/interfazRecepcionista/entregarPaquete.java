@@ -86,6 +86,10 @@ public class entregarPaquete extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
 
+    /*
+    //Metodo que agrega los pauqetes que ya llegaron a su destino analizando que la localizacion y el destino sea el mismo
+    //ademas verifica que el estado sea false que signifca que aun no ha sido entregado
+    */
     public void agregarPaquetes(){
         String idPaquete;
         try {
@@ -103,6 +107,11 @@ public class entregarPaquete extends javax.swing.JInternalFrame {
         
     }
     
+    
+    /*
+    //Metodo que actualiza la informacion de los paquetes que no han sido entregados
+    //cambiando la variable booleana estado a true que significa que esta entregado
+    */
     public void entregar(){
         boolean estado;
         int idPaquete = Integer.parseInt(cbxPaquetes.getSelectedItem().toString());

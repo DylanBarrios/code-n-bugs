@@ -11,11 +11,12 @@ import javax.swing.JOptionPane;
 public class actualizarRuta extends javax.swing.JDialog {
 
     String nombre = tablaRutas.nombre;
+    
     public actualizarRuta(rutas ruta, boolean modal) {
         super(ruta, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        rellenar();
+        rellenar();                                                              //metodo que obtendrá lso datos para llenar los elementos
     }
 
     @SuppressWarnings("unchecked")
@@ -148,11 +149,10 @@ public class actualizarRuta extends javax.swing.JDialog {
         
         try{
             Connection conecta = conexion.conectar();
-        
             String datos = "SELECT NombreRuta, Destino, EstadoRuta FROM Rutas WHERE NombreRuta = '"+nombre+"'";
             PreparedStatement pst = conecta.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
-            
+            ResultSet rs = pst.executeQuery();                                                              //Llena los campos deacuerdo al nombre de la fila
+                                                                                                            //que hayan seleccionado anteriormente
             if(rs.next()){
                 txtDestino.setText(rs.getString("Destino"));
                 txtNombre.setText(rs.getString("NombreRuta"));
@@ -160,7 +160,7 @@ public class actualizarRuta extends javax.swing.JDialog {
             }
             
         }catch(SQLException e){
-            
+            System.err.println("Error al obtener los datos para llenar "+e);
         }
     }
 
@@ -176,8 +176,8 @@ public class actualizarRuta extends javax.swing.JDialog {
         
         try {
             Connection conecta = conexion.conectar();
-            String datos = "UPDATE Rutas SET EstadoRuta = ? WHERE NombreRuta = '"+nombre+"'";
-            PreparedStatement pst = conecta.prepareStatement(datos);
+            String datos = "UPDATE Rutas SET EstadoRuta = ? WHERE NombreRuta = '"+nombre+"'";       //Carga a la tabla Rutas los datos que hayan sido
+            PreparedStatement pst = conecta.prepareStatement(datos);                                //modificados
             
             pst.setString(1, stringEstado);
             pst.executeUpdate();

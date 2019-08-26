@@ -63,17 +63,17 @@ public class puntosControl extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         dpPuntos.removeAll();
         dpPuntos.repaint();
-        crearPunto cp = new crearPunto();
-        dpPuntos.add(cp);
+        crearPunto cp = new crearPunto();                                           //Agrega el internalframe encargador de 
+        dpPuntos.add(cp);                                                           //crear puntos
         cp.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         dpPuntos.removeAll();
         dpPuntos.repaint();
-        tablaPuntosControl tpc = new tablaPuntosControl();
-        dpPuntos.add(tpc);
-        tpc.rellenarTabla();
+        tablaPuntosControl tpc = new tablaPuntosControl();                          //Agrega el internalframe encargador de 
+        dpPuntos.add(tpc);                                                          //mostar todos los puntos de control con los cuales
+        tpc.rellenarTabla();                                                        //trabaja el correo
         tpc.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

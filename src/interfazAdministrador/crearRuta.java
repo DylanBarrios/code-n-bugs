@@ -169,7 +169,7 @@ public class crearRuta extends javax.swing.JInternalFrame {
 
       public void crearRuta(){
         String nombre = txtNombre.getText();
-        String destino = txtDestino.getText();
+        String destino = txtDestino.getText();                                                  
         float precioDestino = Float.parseFloat(txtPrecioDestino.getText());
         float precioLibra = Float.parseFloat(txtPrecioLibra.getText());
         float precioPriorizacion = Float.parseFloat(txtPrecioPriorizacion.getText());
@@ -187,8 +187,8 @@ public class crearRuta extends javax.swing.JInternalFrame {
         try {
             Connection conectar = conexion.conectar();
             
-            String datos = "INSERT INTO Rutas VALUES(?,?,?,?,?,?,?)";
-            
+            String datos = "INSERT INTO Rutas VALUES(?,?,?,?,?,?,?)";                                   //Insertamos los valores nuevos 
+                                                                                                        //de la nueva Ruta creada por el administrador
             PreparedStatement pst = conectar.prepareStatement(datos);
             
             pst.setInt(1, 0);
@@ -208,8 +208,8 @@ public class crearRuta extends javax.swing.JInternalFrame {
         
     }
       
-    public void limpiar(){
-        txtDestino.setText("");
+    public void limpiar(){                                                                                  //Metodo que limpia todos los espacios
+        txtDestino.setText("");                                                                             //donde puede escibirse
         txtNombre.setText("");
         txtPrecioLibra.setText("");
         txtPrecioDestino.setText("");

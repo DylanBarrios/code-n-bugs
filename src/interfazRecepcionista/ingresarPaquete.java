@@ -29,8 +29,8 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
     public ingresarPaquete() {
         initComponents();
         btnFactura.setEnabled(false);
-        rutas();
-        crearTabla();
+        rutas();                                                                    //Llama metodo que llenara el combo box con las rutas disponibles
+        crearTabla();                                                               //Muestra una tabla con los paquetes que acaban de poner en el correo
     }
 
     @SuppressWarnings("unchecked")
@@ -228,8 +228,8 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
 
         try {
             PreparedStatement ps = conecta.prepareStatement(datos);
-            ResultSet rs = ps.executeQuery();
-
+            ResultSet rs = ps.executeQuery();                                           //Agrega al combo de destinos los destinos que existen en todas
+                                                                                        //las rutas con las que se cuenta
             while (rs.next()) {
                 list.add(rs.getString("Destino"));
             }
@@ -243,14 +243,7 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         }
     }
 
-    public String total() {
-        int total;
-        String stringTotal;
-        total = Integer.parseInt(txtPeso.getText()) * 5;
-        stringTotal = String.valueOf(total);
-        return stringTotal;
-    }
-
+    
     public void agregarPaquete() {
         String nit = txtNit.getText();
         String fecha = ((JTextField) dateFecha.getDateEditor().getUiComponent()).getText();
@@ -263,16 +256,16 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         float peso = Float.parseFloat(txtPeso.getText());
         localizacion = "Bodega";
 
-        if (priorizacion.equals("No")) {
-            booleanpriorizacion = false;
+        if (priorizacion.equals("No")) {                                                               //COnvierte la seleccion de prorizacion de strings
+            booleanpriorizacion = false;                                                               //a booleanos para comparar
         } else if (priorizacion.equals("Si")) {
             booleanpriorizacion = true;
         }
         
          try {
-            datos = "SELECT NitCliente FROM Clientes WHERE NitCliente = '"+nit+"'";
-            pst = conecta.prepareStatement(datos);
-            rs = pst.executeQuery();
+            datos = "SELECT NitCliente FROM Clientes WHERE NitCliente = '"+nit+"'";                     //Verifica si el nit que ingreso el usuario recepcionista
+            pst = conecta.prepareStatement(datos);                                                      //esta regsitrado en la base de datos, de lo contrario
+            rs = pst.executeQuery();                                                                    //no dejara agregar hasta que lo registre
 
             if (rs.next()) {
                 datos = "INSERT INTO Paquete VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -292,7 +285,7 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
                 pst.setDouble(12, 0); 
                 pst.executeUpdate();
 
-                JOptionPane.showMessageDialog(null, "Paquete agregado Le cobraran " + cobro());
+                JOptionPane.showMessageDialog(null, "Paquete agregado Le cobraran " + cobro());          
                 llenarTabla(fecha);
                 txtNit.setEnabled(false);
                 txtPeso.setText("");
@@ -313,9 +306,9 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
             ResultSet rs = pst.executeQuery();
             Object[] fila = new Object[7];
             while (rs.next()) {
-                for (int i = 0; i < 7; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
+                for (int i = 0; i < 7; i++) {                                                   //Obtiene datos de los paquetes deacuerdo
+                    fila[i] = rs.getObject(i + 1);                                              //con lo que el usuario haya escrito para posteriormente
+                }                                                                               //agregarlos a una tabla
             }
             modelo.addRow(fila);
             conectar.close();
@@ -325,6 +318,10 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         }
     }
 
+    /*
+    //Metodo que devuelve la cantidad que le cobraran al usuario poor su paquete
+    //dependiendo de la cantidad de libras que peso y el destino del mismo
+    */
     private Double cobro() {
         Double precioDestino = null, precioLibra = null, precioPriorizacion = null, costoPaquete = null;
         String destino = cbxDestino.getSelectedItem().toString();
@@ -356,13 +353,17 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
     }
 
     public void limpiar() {
-        txtNit.setEnabled(true);
-        txtNit.setText("");
+        txtNit.setEnabled(true);                                                //Limpia todos los objetos donde 
+        txtNit.setText("");                                                     //el usuario recepcionista haya escrito
         txtPeso.setText("");
         dateFecha.setDate(null);
         tableAgregados.removeAll();
     }
 
+    /*
+    //Metodo que genera facturas gracias una libreria la cual permite exportar a una factura PDF ya que de esta forma se podria 
+    //imprimir y darla a la persona quedandose el recepcionista con una copia por seguridad
+    */
     private void generarFactura() {
         String datos = "";
         PreparedStatement pst;
@@ -430,8 +431,8 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         JTable tablePaquetes = new JTable(modelo);
             jScrollPane1.setViewportView(tablePaquetes);
 
-            modelo.addColumn("Id paquete");
-            modelo.addColumn("Nit del cliente");
+            modelo.addColumn("Id paquete");                                     //Agrega columnas necesarias para generar la factura despues de terminar
+            modelo.addColumn("Nit del cliente");                                //de agregar todos los paquetes que traiga
             modelo.addColumn("Peso");
             modelo.addColumn("Destino");
             modelo.addColumn("Prioridad");
@@ -443,9 +444,9 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
     public String obtenerRuta(){
     try{
         PreparedStatement ps= conecta.prepareStatement("SELECT NombreRuta FROM Rutas WHERE Destino ='"+cbxDestino.getSelectedItem().toString()+"'");
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()){
-        ruta=rs.getString("NombreRuta");
+        ResultSet rs = ps.executeQuery();                                                                  //Obtiene datos deacuerdo al destino que
+        if(rs.next()){                                                                                     //haya seleccionado en el combo box que se le pone 
+        ruta=rs.getString("NombreRuta");                                                                   //a la disposicion
         }
     }catch(SQLException e){
         System.err.println("Error al jalar la ruta " +e);

@@ -1,8 +1,8 @@
 package interfazAdministrador;
 
-public class Usuarios extends javax.swing.JFrame {
+public class usuarios extends javax.swing.JFrame {
 
-    public Usuarios() {
+    public usuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -57,18 +57,18 @@ public class Usuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVerActionPerformed
-        dpUsuarios.removeAll();
-        dpUsuarios.repaint();
+        dpUsuarios.removeAll();                                                 //Removemos cualquier internalFrame que este 
+        dpUsuarios.repaint();                                                   //para poder agregar esta y no tengamos muchas a la vez
         tablaUsuarios tu = new tablaUsuarios();
-        this.dpUsuarios.add(tu);
-        tu.rellenarTabla();
+        this.dpUsuarios.add(tu);                                                //muestra la tabla donde estan resgitrados todos
+        tu.rellenarTabla();                                                     //los usuarios
         tu.show();
     }//GEN-LAST:event_itemVerActionPerformed
 
     private void itemCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCrearActionPerformed
         dpUsuarios.removeAll();
         dpUsuarios.repaint();
-        crearUsuario cu = new crearUsuario();
+        crearUsuario cu = new crearUsuario();                                   //Agregar el Interfanal Frame para crear usuarios nuevos
         dpUsuarios.add(cu);
         cu.show();
     }//GEN-LAST:event_itemCrearActionPerformed

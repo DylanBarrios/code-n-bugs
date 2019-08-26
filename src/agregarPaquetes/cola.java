@@ -24,7 +24,7 @@ public class cola {
             PreparedStatement pst = conecta.prepareStatement(datos);
             ResultSet rs = pst.executeQuery();
             
-            while(rs.next() && ingresados<taman){                                                                                //Verifica si el limite del tamaño no es excedido
+            while(rs.next() && ingresados<taman){                                                                  //Verifica si el limite del tamaño no es excedido
                 idPaquete = rs.getInt("IdPaquete");
                 nit = rs.getString("NitCliente");
                 destino = rs.getString("Destino");

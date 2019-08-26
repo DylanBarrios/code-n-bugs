@@ -91,9 +91,9 @@ public class CrearCliente extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       
-      if(txtNit.getText().equals("") || txtNombre.getText().equals(""))
-          JOptionPane.showMessageDialog(null, "Porfavor rellene todos los campos");
-      else{
+      if(txtNit.getText().equals("") || txtNombre.getText().equals(""))                     //Verifica que los campos donde debia agregar
+          JOptionPane.showMessageDialog(null, "Porfavor rellene todos los campos");         //infromacion no lo deje en blanco para asi poder
+      else{                                                                                 //registrar un nuevo cliente
           crear();
           this.setVisible(false);
       }
@@ -119,9 +119,9 @@ public class CrearCliente extends javax.swing.JInternalFrame {
         
         try {
             Connection conecta = conexion.conectar();
-            String datos = "INSERT INTO Clientes VALUES(?,?,?)";
-            PreparedStatement pst = conecta.prepareStatement(datos);
-            
+            String datos = "INSERT INTO Clientes VALUES(?,?,?)";                                    //Agregando los valores que obtiene de los
+            PreparedStatement pst = conecta.prepareStatement(datos);                                //objetos en la interfaz grafica crea
+                                                                                                    //un nuevo cliente
             pst.setInt(1, 0);
             pst.setString(2, nit);
             pst.setString(3, nombre);

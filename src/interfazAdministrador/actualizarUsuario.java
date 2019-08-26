@@ -11,11 +11,11 @@ public class actualizarUsuario extends javax.swing.JDialog {
 
     String usuario = tablaUsuarios.nombre;
     
-    public actualizarUsuario(Usuarios user, boolean modal) {
+    public actualizarUsuario(usuarios user, boolean modal) {
         super(user, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        llenarInfo();
+        llenarInfo();                                                           //Llama el metodo que llena la informacion a modificar
     }
 
     
@@ -33,7 +33,7 @@ public class actualizarUsuario extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
 
@@ -61,12 +61,12 @@ public class actualizarUsuario extends javax.swing.JDialog {
 
         jLabel6.setText("Password:");
 
-        jButton1.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
-        jButton1.setText("ACTUALIZAR INFORMACION");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
+        btnActualizar.setText("ACTUALIZAR INFORMACION");
+        btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -110,7 +110,7 @@ public class actualizarUsuario extends javax.swing.JDialog {
                                         .addGap(57, 57, 57)
                                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -149,20 +149,74 @@ public class actualizarUsuario extends javax.swing.JDialog {
                             .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        actualizar();
+        
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JComboBox<String> cbxEstado;
+    private javax.swing.JComboBox<String> cbxRol;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtUsuario;
+    // End of variables declaration//GEN-END:variables
+
+    /*
+    //Metodo que llena los campos para actualziar deaceurdo al nombre del usuario que hay seleccionado el usuario 
+    */
+    private void llenarInfo() {
+        try {
+            Connection conectar = conexion.conectar();
+            String datos = "SELECT NombreUsuario, Username, Rol, Password, Estado FROM Usuario WHERE Username = '"+usuario+"'";
+            PreparedStatement pst = conectar.prepareStatement(datos);
+            ResultSet rs = pst.executeQuery();
+            System.out.println(usuario);
+            
+            if(rs.next()){
+                txtNombre.setText(rs.getString("NombreUsuario"));
+                txtUsuario.setText(rs.getString("Username"));
+                txtPassword.setText(rs.getString("Password"));
+                cbxEstado.setSelectedItem(rs.getString("Estado"));
+                cbxRol.setSelectedItem(rs.getString("Rol"));
+            }
+            else{
+                System.out.println("No hay datos");
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error "+e);
+        }
+    }
+    
+    private void actualizar(){
         String nombre = txtNombre.getText();
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
         
         String stringRol = "";
-        String stringEstado = "";
+        String stringEstado = "";                                                                   
         
         int rol = cbxRol.getSelectedIndex();
         int estado = cbxEstado.getSelectedIndex();
@@ -191,8 +245,8 @@ public class actualizarUsuario extends javax.swing.JDialog {
             String datos = "UPDATE Usuario SET NombreUsuario=?, Username=?, Rol=?, Password=?, Estado=?  WHERE Username = '"+usuario+"'";
             PreparedStatement pst = conectar.prepareStatement(datos);
             
-            pst.setString(1, nombre);
-            pst.setString(2, usuario);
+            pst.setString(1, nombre);                                                           //Carga a la tabla Usuario la nueva informacion que el 
+            pst.setString(2, usuario);                                                          //administrador haya seleccionado.
             pst.setString(3, stringRol);
             pst.setString(4, password);
             pst.setString(5, stringEstado);
@@ -200,53 +254,6 @@ public class actualizarUsuario extends javax.swing.JDialog {
             
         } catch (SQLException e) {
             System.out.println("error "+e);
-        }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        char c = evt.getKeyChar();                                              //Permite solo escribir letras
-        if (c < 'a' || c > 'z') {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtNombreKeyTyped
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxEstado;
-    private javax.swing.JComboBox<String> cbxRol;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtUsuario;
-    // End of variables declaration//GEN-END:variables
-
-    private void llenarInfo() {
-        try {
-            Connection conectar = conexion.conectar();
-            String datos = "SELECT NombreUsuario, Username, Rol, Password, Estado FROM Usuario WHERE Username = '"+usuario+"'";
-            PreparedStatement pst = conectar.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
-            System.out.println(usuario);
-            
-            if(rs.next()){
-                txtNombre.setText(rs.getString("NombreUsuario"));
-                txtUsuario.setText(rs.getString("Username"));
-                txtPassword.setText(rs.getString("Password"));
-                cbxEstado.setSelectedItem(rs.getString("Estado"));
-                cbxRol.setSelectedItem(rs.getString("Rol"));
-            }
-            else{
-                System.out.println("No hay datos");
-            }
-            
-        } catch (SQLException e) {
-            System.out.println("Error "+e);
         }
     }
 }

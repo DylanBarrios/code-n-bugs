@@ -305,9 +305,9 @@ public class procesarPaquetes extends javax.swing.JInternalFrame {
     public int horasEnRuta(){
         int horasEnRuta =0;
         try {
-            String datos = "SELECT TiempoEnRuta FROM Paquete WHERE IdPaquete ="+IdPaquete;
-            PreparedStatement pst = conecta.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
+            String datos = "SELECT TiempoEnRuta FROM Paquete WHERE IdPaquete ="+IdPaquete;          //Obtenemos el tiempo en el que el paquete a estado 
+            PreparedStatement pst = conecta.prepareStatement(datos);                                //en ruta y obtenemos este tiempo deacuerdo e id del paquete
+            ResultSet rs = pst.executeQuery();                                                      //que se haya selccionado en el comobo box
             if(rs.next())
                 horasEnRuta = rs.getInt("TiempoEnRuta");          
         } catch (SQLException e) {
@@ -323,11 +323,11 @@ public class procesarPaquetes extends javax.swing.JInternalFrame {
         int horas;
         double PrecioHora=0;
         try {
-            String datos = "SELECT PrecioHora FROM PuntoControl WHERE IdPunto ="+idPunto;
-            PreparedStatement pst = conecta.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
-            if(rs.next())
-                PrecioHora = rs.getDouble("PrecioHora");          
+            String datos = "SELECT PrecioHora FROM PuntoControl WHERE IdPunto ="+idPunto;               //Se calcula el costo de cada paquete 
+            PreparedStatement pst = conecta.prepareStatement(datos);                                    //obteniendolo deacuerdo el id que se haya seleccionado
+            ResultSet rs = pst.executeQuery();                                                          //en el combo box y luego los actulizamos 
+            if(rs.next())                                                                               //multiplicando la tarifa de operacion por la cantidad
+                PrecioHora = rs.getDouble("PrecioHora");                                                //de horas que estuvo en el punto de control
         } catch (SQLException e) {
             System.err.println("Erro al obtener el Precio por hora "+e);
         }

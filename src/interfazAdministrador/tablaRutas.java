@@ -54,8 +54,8 @@ public class tablaRutas extends javax.swing.JInternalFrame {
             
             ResultSet rs = pst.executeQuery();
             
-            tableRutas = new JTable(modelo);
-            jScrollPane1.setViewportView(tableRutas);
+            tableRutas = new JTable(modelo);                                                    //Obtiene los datos de Rutas para llenar la tabla
+            jScrollPane1.setViewportView(tableRutas);                                           //donde se podran ver las rutas creadas
             
             modelo.addColumn("Nombre");
             modelo.addColumn("Destino");
@@ -75,10 +75,10 @@ public class tablaRutas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error, notifique al administrador!!");
         }
         
-        tableRutas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                int filaSelec = tableRutas.rowAtPoint(e.getPoint());
+        tableRutas.addMouseListener(new MouseAdapter() {                                          //Metodo que ayuda a identificar si una celda de la tabla
+            @Override                                                                             //a sido precionado y habre la ventana para actualizar 
+            public void mouseClicked(MouseEvent e){                                               //o modificar los datos del punto de control
+                int filaSelec = tableRutas.rowAtPoint(e.getPoint());                
                         
                 if(filaSelec >=0){
                     nombre = (String)modelo.getValueAt(filaSelec, 0);

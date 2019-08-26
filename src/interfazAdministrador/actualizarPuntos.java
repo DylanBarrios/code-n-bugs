@@ -21,6 +21,10 @@ public class actualizarPuntos extends javax.swing.JDialog {
     int idUsuario = tablaPuntosControl.idUsuario;
     int IdPunto = tablaPuntosControl.idPunto;
 
+    /*
+    //Constructor con dos parametros los cuales son necesario añadir por ser un JDialog
+    //este bloqueara la interfaz que se encuentre debajo
+    */
     public actualizarPuntos(puntosControl puntos, boolean modal) {
         super(puntos, modal);
         initComponents();
@@ -237,9 +241,9 @@ public class actualizarPuntos extends javax.swing.JDialog {
 
     private void llenarInfo() {
         try {
-            String datos = "SELECT EstadoPunto, NombrePunto, PrecioHora FROM PuntoControl WHERE IdPunto = '" + IdPunto + "'";
-            PreparedStatement pst = conecta.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
+            String datos = "SELECT EstadoPunto, NombrePunto, PrecioHora FROM PuntoControl WHERE IdPunto = '" + IdPunto + "'";   //Valida si en la tabla punto de control
+            PreparedStatement pst = conecta.prepareStatement(datos);                                                            //existe el Id que presionaron en la tabla
+            ResultSet rs = pst.executeQuery();                                                                                  //anterior
 
             if (rs.next()) {
                 String precio = String.valueOf(rs.getDouble("PrecioHora"));
@@ -248,15 +252,15 @@ public class actualizarPuntos extends javax.swing.JDialog {
                 cbxEstado.setSelectedItem(rs.getString("EstadoPunto"));
             }
 
-            datos = "SELECT NombreRuta FROM Rutas WHERE IdRuta = '" + idRuta + "'";
-            pst = conecta.prepareStatement(datos);
-            rs = pst.executeQuery();
+            datos = "SELECT NombreRuta FROM Rutas WHERE IdRuta = '" + idRuta + "'";                                             //Verifica en la tabla de rutas si existe
+            pst = conecta.prepareStatement(datos);                                                                              //un punto de control que tenga el id de la
+            rs = pst.executeQuery();                                                                                            //ruta de la celda que presionaron en la tabla
             if (rs.next()) {
                 txtRuta.setText(rs.getString("NombreRuta"));
             }
 
-            datos = "SELECT NombreUsuario FROM Usuario WHERE IdUsuario = '" + idUsuario + "'";
-            pst = conecta.prepareStatement(datos);
+            datos = "SELECT NombreUsuario FROM Usuario WHERE IdUsuario = '" + idUsuario + "'";                                  //Verifica si en la tabla de usuarios existe
+            pst = conecta.prepareStatement(datos);                                                                              //un usuario con ese id y lo agrega al combo
             rs = pst.executeQuery();
             if (rs.next()) {
                 cbxOperador.setSelectedItem(rs.getString("NombreUsuario"));
@@ -268,22 +272,22 @@ public class actualizarPuntos extends javax.swing.JDialog {
     }
 
     public void operarios() {
-        ArrayList<String> list = new ArrayList<String>();
-        String datos = "SELECT Rol, NombreUsuario FROM Usuario";
+        ArrayList<String> listaOperarios = new ArrayList<String>();                                              //Lista para guardar a todos los usuarios con cargo
+        String datos = "SELECT Rol, NombreUsuario FROM Usuario";                                                 //de operarios
 
         try {
             PreparedStatement ps = conecta.prepareStatement(datos);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                if (rs.getString("Rol").equals("Operador")) {
-                    list.add(rs.getString("NombreUsuario"));
+                if (rs.getString("Rol").equals("Operador")) {                                                    //Se valida si el usuario es un operador para 
+                    listaOperarios.add(rs.getString("NombreUsuario"));                                           //agregarlo a la lista
                 }
             }
 
-            for (int i = 0; i < list.size(); i++) {
-                cbxOperador.addItem(list.get(i));
-            }
+            for (int i = 0; i < listaOperarios.size(); i++) {
+                cbxOperador.addItem(listaOperarios.get(i));                                                     //Se agrega la lista al combo para poder elegir
+            }                                                                                                   //a alguno para poder modificarñp
 
         } catch (SQLException e) {
             System.out.println("Error " + e);
@@ -301,7 +305,7 @@ public class actualizarPuntos extends javax.swing.JDialog {
         String nombreUsuario = cbxOperador.getSelectedItem().toString();
         int estado = cbxEstado.getSelectedIndex();
 
-        if (estado == 0) {
+        if (estado == 0) {                                                                                              
             stringEstado = "Activo";
         } else if (estado == 1) {
             stringEstado = "Inactivo";
@@ -309,9 +313,9 @@ public class actualizarPuntos extends javax.swing.JDialog {
 
         int idUsuarioN = 0;
         try {
-            datos = "SELECT IdUsuario FROM Usuario WHERE NombreUsuario = '" + nombreUsuario + "'";
-            pst = conecta.prepareStatement(datos);
-            ResultSet rs = pst.executeQuery();
+            datos = "SELECT IdUsuario FROM Usuario WHERE NombreUsuario = '" + nombreUsuario + "'";                          //Se obtiene el id del usuario a partir
+            pst = conecta.prepareStatement(datos);                                                                          //de su nombre para poder actualizar
+            ResultSet rs = pst.executeQuery();                                                                              //su informacion
             if (rs.next()) {
                 idUsuarioN = rs.getInt("IdUsuario");
             }
@@ -323,12 +327,12 @@ public class actualizarPuntos extends javax.swing.JDialog {
             datos = "UPDATE PuntoControl SET IdUsuario = ?, EstadoPunto = ?, PrecioHora = ?, NombrePunto = ? WHERE IdPunto = '" + IdPunto + "'";
             pst = conecta.prepareStatement(datos);
 
-            pst.setInt(1, idUsuarioN);
-            pst.setString(2, stringEstado);
+            pst.setInt(1, idUsuarioN);                                                                                      //Se llena la tabla usuarios con 
+            pst.setString(2, stringEstado);                                                                                 //los datos que se hayan modificado
             pst.setDouble(3, precioHora);
             pst.setString(4, nombrePunto);
-            pst.executeUpdate();
-
+            pst.executeUpdate();                                                                                            //Se actualiza la tabla para guardar
+                                                                                                                            //los cambios
             JOptionPane.showMessageDialog(null, "Punto de control Actualizado");
 
         } catch (HeadlessException | SQLException e) {

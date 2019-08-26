@@ -176,7 +176,7 @@ public class crearUsuario extends javax.swing.JInternalFrame {
 
     public void nuevoUsuario() {
         String nombre = txtNombre.getText();
-        String usuario = txtUsuario.getText();
+        String usuario = txtUsuario.getText();                                  
         String password = txtPassword.getText();
         String stringRol = "";
         String stringEstado = "";
@@ -206,19 +206,19 @@ public class crearUsuario extends javax.swing.JInternalFrame {
 
         try {
             Connection conecta = conexion.conectar();
-            String datos = "INSERT INTO Usuario VALUES(?,?,?,?,?,?)";
+            String datos = "INSERT INTO Usuario VALUES(?,?,?,?,?,?)";                           
 
             PreparedStatement pst = conecta.prepareStatement(datos);
 
             pst.setInt(1, 0);
-            pst.setString(2, nombre);
-            pst.setString(3, usuario);
+            pst.setString(2, nombre);                                                                   //Asigna los valores que han sido obtenidos
+            pst.setString(3, usuario);                                                                  //desde la interfaz y crea un nuevo usuario
             pst.setString(4, password);
             pst.setString(5, stringRol);
             pst.setString(6, stringEstado);
 
-            pst.executeUpdate();
-
+            pst.executeUpdate();                                                                        //Actualiza la tabla para que almacene 
+                                                                                                        //al nuevo usuario
             JOptionPane.showMessageDialog(null, "Usuario nuevo creado");
 
         } catch (SQLException e) {
@@ -226,8 +226,8 @@ public class crearUsuario extends javax.swing.JInternalFrame {
         }
     }
 
-    public void limpiar() {
-        txtNombre.setText("");
+    public void limpiar() {                                                                             //Metodo que limpia los objetos que han 
+        txtNombre.setText("");                                                                          //sido llenados por el usuario administrador
         txtPassword.setText("");
         txtUsuario.setText("");
     }
