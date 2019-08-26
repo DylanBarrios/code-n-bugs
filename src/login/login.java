@@ -9,7 +9,6 @@ import interfazOperador.operador;
 import interfazRecepcionista.recepcionista;
 import java.sql.*;
 import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import backend.conexion;

@@ -32,6 +32,11 @@ public class procesarPaquetes extends javax.swing.JInternalFrame {
         cbxPaquete = new javax.swing.JComboBox<>();
 
         txtHoras.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        txtHoras.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHorasKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Horas en este punto:");
 
@@ -119,7 +124,11 @@ public class procesarPaquetes extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if(txtHoras.equals(""))
+            JOptionPane.showMessageDialog(null, "Por favor establezca la cantidad de horas");
+        else
             procesar();
+                
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void cbxPuntoSalidaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxPuntoSalidaItemStateChanged
@@ -129,6 +138,13 @@ public class procesarPaquetes extends javax.swing.JInternalFrame {
             cargarPaquetes();                                                                               //Al cambiar de punto de control cambia los paquetes
         }
     }//GEN-LAST:event_cbxPuntoSalidaItemStateChanged
+
+    private void txtHorasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorasKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtHorasKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

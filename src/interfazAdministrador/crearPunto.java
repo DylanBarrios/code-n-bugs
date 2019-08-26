@@ -46,6 +46,11 @@ public class crearPunto extends javax.swing.JInternalFrame {
         jLabel3.setText("Precio por hora");
 
         txtPrecioHora.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        txtPrecioHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioHoraKeyTyped(evt);
+            }
+        });
 
         btnCrear.setText("CREAR");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +72,19 @@ public class crearPunto extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nombre Punto de Control");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         jLabel6.setText("Cantidad de paquetes:");
+
+        txtCola.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,6 +162,27 @@ public class crearPunto extends javax.swing.JInternalFrame {
     private void cbxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxEstadoActionPerformed
+
+    private void txtPrecioHoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioHoraKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '1' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioHoraKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtColaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColaKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtColaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

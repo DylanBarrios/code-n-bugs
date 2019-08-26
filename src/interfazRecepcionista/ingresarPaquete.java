@@ -58,6 +58,12 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Peso:");
 
+        txtPeso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesoKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Destino:");
 
         btnIngresar.setText("Ingresar");
@@ -71,6 +77,12 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFacturaActionPerformed(evt);
+            }
+        });
+
+        txtNit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNitKeyTyped(evt);
             }
         });
 
@@ -177,6 +189,20 @@ public class ingresarPaquete extends javax.swing.JInternalFrame {
         generarFactura();
         limpiar();
     }//GEN-LAST:event_btnFacturaActionPerformed
+
+    private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNitKeyTyped
+
+    private void txtPesoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesoKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPesoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

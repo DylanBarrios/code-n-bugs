@@ -7,11 +7,7 @@ package interfazRecepcionista;
 
 import backend.conexion;
 import login.login;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -40,8 +36,6 @@ public class recepcionista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtBuscar = new javax.swing.JTextField();
-        labelBuscar = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablePaquetes = new javax.swing.JTable();
@@ -52,22 +46,13 @@ public class recepcionista extends javax.swing.JFrame {
         itemIngresar = new javax.swing.JMenuItem();
         itemEntregar = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyPressed(evt);
-            }
-        });
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 10, 200, 40));
-
-        labelBuscar.setText("Nit Cliente");
-        getContentPane().add(labelBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 20, -1, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
         jButton2.setBorder(null);
@@ -77,7 +62,7 @@ public class recepcionista extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 0, 80, 60));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 0, 80, 60));
 
         tablePaquetes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,6 +93,11 @@ public class recepcionista extends javax.swing.JFrame {
         jMenu1.add(itemIngresar);
 
         itemEntregar.setText("Entregar un paquete");
+        itemEntregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEntregarActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemEntregar);
 
         jMenuItem2.setText("Ver paquetes sin entregar");
@@ -117,6 +107,14 @@ public class recepcionista extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Localizar un paquete");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -154,57 +152,45 @@ public class recepcionista extends javax.swing.JFrame {
         tablaPaquetes();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
-        DefaultTableModel modelo = new DefaultTableModel();
-        try {
-            Connection conectar = conexion.conectar();
-            String datos = "SELECT IdPaquete, NitCLiente, Peso, Destino, Costo, TiempoEnRuta,"
-                    +"Localizacion FROM Paquete WHERE NitCLiente LIKE '%"+txtBuscar.getText()+"%'"; 
-            PreparedStatement pst = conectar.prepareStatement(datos);
-            
-            ResultSet rs = pst.executeQuery();
-            
-            tablePaquetes = new JTable(modelo);
-            jScrollPane1.setViewportView(tablePaquetes);
-            
-            modelo.addColumn("Id paquete");
-            modelo.addColumn("Nit del cliente");
-            modelo.addColumn("Peso");
-            modelo.addColumn("Destino");
-            modelo.addColumn("Costo");
-            modelo.addColumn("Tiempo en ruta");
-            modelo.addColumn("Localizacion");
-            
-                        
-            while(rs.next()){
-                Object[] fila = new Object[7];
-                
-                for (int i = 0; i < 7; i++) {
-                    fila[i] = rs.getObject(i +1);
-                }
-                modelo.addRow(fila);
-            }
-            conectar.close();
-        } catch (SQLException e) {
-            System.err.println("Error"+e);
-            JOptionPane.showMessageDialog(null, "Error, notifique al administrador!!");
-        }
-    }//GEN-LAST:event_txtBuscarKeyPressed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new login().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void itemEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEntregarActionPerformed
+        entregarPaquete ep = new entregarPaquete();
+        dpPaquetes.add(ep);
+        ep.show();
+    }//GEN-LAST:event_itemEntregarActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        localizarPaquete lp = new localizarPaquete();
+        dpPaquetes.add(lp);
+        lp.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane dpPaquetes;
+    public javax.swing.JDesktopPane dpPaquetesPorEntregar;
+    private javax.swing.JMenuItem itemEntregar;
+    private javax.swing.JMenuItem itemIngresar;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablePaquetes;
+    // End of variables declaration//GEN-END:variables
+
 
     private void crearCliente(){
         dpPaquetesPorEntregar.removeAll();
         dpPaquetesPorEntregar.repaint();
         tablePaquetes.setVisible(false);
         jScrollPane1.setVisible(false);
-        labelBuscar.setVisible(false);
-        txtBuscar.setVisible(false);
-       
-        
         CrearCliente cc = new CrearCliente();
         dpPaquetesPorEntregar.add(cc);
         cc.show();
@@ -215,15 +201,14 @@ public class recepcionista extends javax.swing.JFrame {
         dpPaquetesPorEntregar.removeAll();
         tablePaquetes.setVisible(true);
         jScrollPane1.setVisible(true);
-        labelBuscar.setVisible(true);
-        txtBuscar.setVisible(true);
+        
         dpPaquetesPorEntregar.repaint();
         
         DefaultTableModel modelo = new DefaultTableModel();
         try {
             Connection conectar = conexion.conectar();
-            String datos = "SELECT IdPaquete, NitCLiente, Peso, Destino, Costo, TiempoEnRuta,"
-                    + "Localizacion FROM Paquete WHERE EstadoPaquete = 0"; 
+            String datos = "SELECT IdPaquete, NitCLiente, Peso, Destino, Precio, TiempoEnRuta,"
+                    + "Localizacion FROM Paquete WHERE EstadoPaquete = 0 AND Localizacion=Destino"; 
             PreparedStatement pst = conectar.prepareStatement(datos);
             
             ResultSet rs = pst.executeQuery();
@@ -235,7 +220,7 @@ public class recepcionista extends javax.swing.JFrame {
             modelo.addColumn("Nit del cliente");
             modelo.addColumn("Peso");
             modelo.addColumn("Destino");
-            modelo.addColumn("Costo");
+            modelo.addColumn("Precio");
             modelo.addColumn("Tiempo en ruta (horas)");
             modelo.addColumn("Localizacion");
             
@@ -254,22 +239,4 @@ public class recepcionista extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error, notifique al administrador!!");
         }
     }
-    
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane dpPaquetes;
-    public javax.swing.JDesktopPane dpPaquetesPorEntregar;
-    private javax.swing.JMenuItem itemEntregar;
-    private javax.swing.JMenuItem itemIngresar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel labelBuscar;
-    private javax.swing.JTable tablePaquetes;
-    private javax.swing.JTextField txtBuscar;
-    // End of variables declaration//GEN-END:variables
 }

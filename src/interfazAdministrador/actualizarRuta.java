@@ -34,6 +34,11 @@ public class actualizarRuta extends javax.swing.JDialog {
 
         txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         CrearRuta.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         CrearRuta.setText("ACTUALIZAR");
@@ -49,6 +54,11 @@ public class actualizarRuta extends javax.swing.JDialog {
         jLabel1.setText("Destino de la ruta");
 
         txtDestino.setEditable(false);
+        txtDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDestinoKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Estado de la ruta:");
 
@@ -109,6 +119,20 @@ public class actualizarRuta extends javax.swing.JDialog {
         actualizar();
         this.setVisible(false);
     }//GEN-LAST:event_CrearRutaActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDestinoKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDestinoKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CrearRuta;

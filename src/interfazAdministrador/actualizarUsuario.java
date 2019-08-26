@@ -48,6 +48,11 @@ public class actualizarUsuario extends javax.swing.JDialog {
         jLabel4.setText("Nombre");
 
         txtNombre.setFont(new java.awt.Font("Ubuntu", 0, 20)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel5.setText("Usuario:");
 
@@ -198,6 +203,13 @@ public class actualizarUsuario extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -42,6 +42,9 @@ public class administrador extends javax.swing.JFrame {
         jLabelFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -115,6 +118,16 @@ public class administrador extends javax.swing.JFrame {
         jMenu2.setForeground(new java.awt.Color(1, 1, 1));
         jMenu2.setText("Reportes");
         jMenu2.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+
+        jMenuItem2.setText("Rutas");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Ganancias");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Clientes");
+        jMenu2.add(jMenuItem4);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setForeground(new java.awt.Color(8, 1, 1));
@@ -170,5 +183,8 @@ public class administrador extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

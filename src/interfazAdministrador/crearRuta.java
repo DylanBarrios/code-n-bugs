@@ -34,6 +34,11 @@ public class crearRuta extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNombre.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 36, 200, 40));
 
         CrearRuta.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
@@ -45,13 +50,19 @@ public class crearRuta extends javax.swing.JInternalFrame {
                 CrearRutaActionPerformed(evt);
             }
         });
-        getContentPane().add(CrearRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 179, 65));
+        getContentPane().add(CrearRuta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 179, 65));
 
         jLabel3.setText("Nombre de la ruta:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
 
         jLabel1.setText("Destino de la ruta");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 83, -1, -1));
+
+        txtDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDestinoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 106, 200, 40));
 
         jLabel4.setText("Estado de la ruta:");
@@ -62,6 +73,12 @@ public class crearRuta extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Precio de priorizacion:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 82, -1, -1));
+
+        txtPrecioPriorizacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioPriorizacionKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPrecioPriorizacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 102, 180, 40));
 
         jLabel5.setText("Precio del destino");
@@ -69,7 +86,19 @@ public class crearRuta extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Precio por libra:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 12, -1, -1));
+
+        txtPrecioDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioDestinoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPrecioDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 178, 200, 40));
+
+        txtPrecioLibra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioLibraKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPrecioLibra, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 180, 40));
 
         pack();
@@ -83,6 +112,41 @@ public class crearRuta extends javax.swing.JInternalFrame {
             limpiar();
         }
     }//GEN-LAST:event_CrearRutaActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDestinoKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDestinoKeyTyped
+
+    private void txtPrecioDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioDestinoKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioDestinoKeyTyped
+
+    private void txtPrecioLibraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioLibraKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioLibraKeyTyped
+
+    private void txtPrecioPriorizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioPriorizacionKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioPriorizacionKeyTyped
 
   
     

@@ -14,12 +14,13 @@ import javax.swing.JOptionPane;
  * @author dylan
  */
 public class actualizarPuntos extends javax.swing.JDialog {
+
     Connection conecta = conexion.conectar();
     String nombrePunto = tablaPuntosControl.nombrePunto;
     int idRuta = tablaPuntosControl.idRuta;
     int idUsuario = tablaPuntosControl.idUsuario;
     int IdPunto = tablaPuntosControl.idPunto;
-    
+
     public actualizarPuntos(puntosControl puntos, boolean modal) {
         super(puntos, modal);
         initComponents();
@@ -51,6 +52,11 @@ public class actualizarPuntos extends javax.swing.JDialog {
         jLabel3.setText("Precio por hora");
 
         txtPrecioHora.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        txtPrecioHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioHoraKeyTyped(evt);
+            }
+        });
 
         jLabel2.setText("Operador:");
 
@@ -65,9 +71,20 @@ public class actualizarPuntos extends javax.swing.JDialog {
 
         jLabel5.setText("Nombre Punto de Control");
 
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         jLabel6.setText("Ruta a la que pertenece:");
 
         txtRuta.setEditable(false);
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRutaKeyTyped(evt);
+            }
+        });
 
         jButton1.setText("Actualizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -168,11 +185,11 @@ public class actualizarPuntos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxEstadoActionPerformed
-       
+
     }//GEN-LAST:event_cbxEstadoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        actualizarPunto();   
+        actualizarPunto();
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -180,6 +197,27 @@ public class actualizarPuntos extends javax.swing.JDialog {
         eliminarPunto();
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtRutaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRutaKeyTyped
+
+    private void txtPrecioHoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioHoraKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir numeros
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPrecioHoraKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char c = evt.getKeyChar();                                              //Permite solo escribir letras
+        if (c < 'a' || c > 'z') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxEstado;
@@ -197,117 +235,116 @@ public class actualizarPuntos extends javax.swing.JDialog {
     private javax.swing.JTextField txtRuta;
     // End of variables declaration//GEN-END:variables
 
-private void llenarInfo() {
+    private void llenarInfo() {
         try {
-            String datos = "SELECT EstadoPunto, NombrePunto, PrecioHora FROM PuntoControl WHERE IdPunto = '"+IdPunto+"'";
+            String datos = "SELECT EstadoPunto, NombrePunto, PrecioHora FROM PuntoControl WHERE IdPunto = '" + IdPunto + "'";
             PreparedStatement pst = conecta.prepareStatement(datos);
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 String precio = String.valueOf(rs.getDouble("PrecioHora"));
                 txtPrecioHora.setText(precio);
                 txtNombre.setText(rs.getString("NombrePunto"));
                 cbxEstado.setSelectedItem(rs.getString("EstadoPunto"));
             }
-            
-            datos = "SELECT NombreRuta FROM Rutas WHERE IdRuta = '"+idRuta+"'";
-                pst = conecta.prepareStatement(datos);
-                rs = pst.executeQuery();
-            if(rs.next()) {   
-               txtRuta.setText(rs.getString("NombreRuta"));
+
+            datos = "SELECT NombreRuta FROM Rutas WHERE IdRuta = '" + idRuta + "'";
+            pst = conecta.prepareStatement(datos);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                txtRuta.setText(rs.getString("NombreRuta"));
             }
-            
-            datos = "SELECT NombreUsuario FROM Usuario WHERE IdUsuario = '"+idUsuario+"'";
-                pst = conecta.prepareStatement(datos);
-                rs = pst.executeQuery();
-            if(rs.next()) {   
-               cbxOperador.setSelectedItem(rs.getString("NombreUsuario"));  
+
+            datos = "SELECT NombreUsuario FROM Usuario WHERE IdUsuario = '" + idUsuario + "'";
+            pst = conecta.prepareStatement(datos);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                cbxOperador.setSelectedItem(rs.getString("NombreUsuario"));
             }
-            
-            
-            
+
         } catch (SQLException e) {
-            System.out.println("Error "+e);
+            System.out.println("Error " + e);
         }
     }
 
-     public void operarios(){
+    public void operarios() {
         ArrayList<String> list = new ArrayList<String>();
         String datos = "SELECT Rol, NombreUsuario FROM Usuario";
-        
+
         try {
-                PreparedStatement ps = conecta.prepareStatement(datos);
-                ResultSet rs = ps.executeQuery();
-                
-                while(rs.next()){
-                    if(rs.getString("Rol").equals("Operador"))
+            PreparedStatement ps = conecta.prepareStatement(datos);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString("Rol").equals("Operador")) {
                     list.add(rs.getString("NombreUsuario"));
                 }
-                
-                for(int i =0; i<list.size(); i++){
-                    cbxOperador.addItem(list.get(i));
-                }
-    
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                cbxOperador.addItem(list.get(i));
+            }
+
         } catch (SQLException e) {
-            System.out.println("Error "+e);
-        }    
+            System.out.println("Error " + e);
+        }
     }
 
-     public void actualizarPunto(){
+    public void actualizarPunto() {
         double precioHora = Double.parseDouble(txtPrecioHora.getText());
         String nombrePunto = txtNombre.getText();
         String operario = cbxOperador.getSelectedItem().toString();
         PreparedStatement pst;
-        
-        
-        String datos;      
+
+        String datos;
         String stringEstado = "";
         String nombreUsuario = cbxOperador.getSelectedItem().toString();
         int estado = cbxEstado.getSelectedIndex();
-        
-        if(estado == 0)
-            stringEstado = "Activo";
-        else if(estado == 1)
-            stringEstado = "Inactivo";
-            
 
-        int idUsuarioN =0;
-        try{
-        datos = "SELECT IdUsuario FROM Usuario WHERE NombreUsuario = '"+nombreUsuario+"'";
-        pst = conecta.prepareStatement(datos);
-        ResultSet rs = pst.executeQuery();
-        if(rs.next()) {   
-            idUsuarioN = rs.getInt("IdUsuario");  
+        if (estado == 0) {
+            stringEstado = "Activo";
+        } else if (estado == 1) {
+            stringEstado = "Inactivo";
         }
-          
-        }catch(SQLException e){}
-        
+
+        int idUsuarioN = 0;
         try {
-            datos = "UPDATE PuntoControl SET IdUsuario = ?, EstadoPunto = ?, PrecioHora = ?, NombrePunto = ? WHERE IdPunto = '"+IdPunto+"'";
+            datos = "SELECT IdUsuario FROM Usuario WHERE NombreUsuario = '" + nombreUsuario + "'";
             pst = conecta.prepareStatement(datos);
-                        
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                idUsuarioN = rs.getInt("IdUsuario");
+            }
+
+        } catch (SQLException e) {
+        }
+
+        try {
+            datos = "UPDATE PuntoControl SET IdUsuario = ?, EstadoPunto = ?, PrecioHora = ?, NombrePunto = ? WHERE IdPunto = '" + IdPunto + "'";
+            pst = conecta.prepareStatement(datos);
+
             pst.setInt(1, idUsuarioN);
             pst.setString(2, stringEstado);
             pst.setDouble(3, precioHora);
             pst.setString(4, nombrePunto);
             pst.executeUpdate();
-                
+
             JOptionPane.showMessageDialog(null, "Punto de control Actualizado");
-        
+
         } catch (HeadlessException | SQLException e) {
-            System.out.println("Error "+e);
+            System.out.println("Error " + e);
         }
     }
 
     private void eliminarPunto() {
-        
+
         try {
-            String datos = "DELETE FROM PuntoControl WHERE IdPunto = '"+IdPunto+"'";
+            String datos = "DELETE FROM PuntoControl WHERE IdPunto = '" + IdPunto + "'";
             PreparedStatement pst = conecta.prepareStatement(datos);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Punto de control eliminado");
         } catch (Exception e) {
-            System.out.println("Error "+e);
+            System.out.println("Error " + e);
         }
     }
 
