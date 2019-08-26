@@ -44,6 +44,10 @@ public class reporteRutas extends javax.swing.JInternalFrame {
             }
         });
 
+        labelEnRuta.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
+
+        labelFueraRuta.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
+
         labeltexto2.setText("Paquetes ya entregados:");
 
         jButton1.setText("Exportar HTML");
@@ -61,19 +65,22 @@ public class reporteRutas extends javax.swing.JInternalFrame {
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labeltexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(33, 33, 33)
                         .addComponent(cbxRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labeltexto2)
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelEnRuta, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                            .addComponent(labelFueraRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labeltexto1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labeltexto2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(101, 101, 101)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelEnRuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelFueraRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -191,11 +198,11 @@ public class reporteRutas extends javax.swing.JInternalFrame {
 
             printw.println("<html>");
             printw.println("<head><title>Reporte Paquetes</title></head>");
-            printw.println("<body bgcolor=\"#99CC99\">");
-
-            printw.println("<center><h1><font color=\"navy\">" + cad +" "+enRuta+ "</font></h1></center>");
-            printw.println("<center><h1><font color=\"navy\">" + cad2 + " "+fueraRuta+ "</font></h1></center>");
-
+            printw.println("<body bgcolor=\"#000000\">");
+            
+            printw.println("<center><h1><font color=\"#FFFFFF\">" + cad2 + " "+fueraRuta+ "</font></h1></center>");
+            printw.println("<HR align=\"CENTER\" size=\"5\" width=\"1000\" color=\"Red\" noshade><center><h1><font color=\"#FFFFFF\">" + cad +" "+enRuta+ "</font></h1></center>");
+            
             printw.println("</body>");
             printw.println("</html>");
 

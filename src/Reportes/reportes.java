@@ -34,6 +34,11 @@ public class reportes extends javax.swing.JFrame {
         menuReportes.add(jMenuItem1);
 
         jMenuItem2.setText("Reporte de Ganancias");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuReportes.add(jMenuItem2);
 
         jMenuItem3.setText("Reporte de clientes");
@@ -65,6 +70,12 @@ public class reportes extends javax.swing.JFrame {
             dpReportes.add(rr);
             rr.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ReporteGanancias rg = new ReporteGanancias();
+        dpReportes.add(rg);
+        rg.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
